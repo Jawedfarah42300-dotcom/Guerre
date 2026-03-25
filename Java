@@ -1,0 +1,60 @@
+const quiz = [
+    {
+        question: "Quand commence la Première Guerre mondiale ?",
+        answers: ["1914", "1918", "1939"],
+        correct: 0
+    },
+    {
+        question: "Qui était Adolf Hitler ?",
+        answers: ["Président américain", "Dirigeant nazi", "Roi"],
+        correct: 1
+    },
+    {
+        question: "Quand finit la Seconde Guerre mondiale ?",
+        answers: ["1945", "1939", "1918"],
+        correct: 0
+    },
+    {
+        question: "Quel traité met fin à la Première Guerre mondiale ?",
+        answers: ["Versailles", "Rome", "Paris"],
+        correct: 0
+    },
+    {
+        question: "Quel événement déclenche la WW1 ?",
+        answers: ["Attentat de Sarajevo", "Invasion Pologne", "Pearl Harbor"],
+        correct: 0
+    }
+];
+
+let current = 0;
+let score = 0;
+
+function loadQuestion() {
+    const q = quiz[current];
+    document.getElementById("question").innerText = q.question;
+
+    const answersDiv = document.getElementById("answers");
+    answersDiv.innerHTML = "";
+
+    q.answers.forEach((answer, index) => {
+        const btn = document.createElement("button");
+        btn.innerText = answer;
+        btn.onclick = () => {
+            if (index === q.correct) score++;
+            nextQuestion();
+        };
+        answersDiv.appendChild(btn);
+    });
+}
+
+function nextQuestion() {
+    current++;
+    if (current < quiz.length) {
+        loadQuestion();
+    } else {
+        document.getElementById("quiz-container").innerHTML =
+            "<h3>Score : " + score + "/" + quiz.length + "</h3>";
+    }
+}
+
+loadQuestion();
